@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -16,6 +16,9 @@
       --gray: #f4f6f9;
       --radius: 20px;
       --shadow: 0 8px 32px rgba(47, 174, 88, 0.12);
+      --nav-height: 62px;
+      --nav-gap: 28px;
+      --transition: .18s;
     }
     * {
       margin: 0;
@@ -32,7 +35,208 @@
       align-items: center;
       overflow-x: hidden;
     }
+    /* 顶部导航条 */
+    .navbar {
+      width: 100vw;
+      min-width: 320px;
+      height: var(--nav-height);
+      background: linear-gradient(90deg, #2fae58 0%, #86e993 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4vw;
+      box-shadow: 0 4px 24px rgba(47,174,88,0.11);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+    .navbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 100%;
+    }
+    .navbar-logo img {
+      height: 42px;
+      width: auto;
+      max-width: 180px;
+      object-fit: contain;
+      /* 移除背景和边框，logo本身就是白底的 */
+      box-shadow: none;
+      background: none;
+      border-radius: 0;
+      padding: 0;
+      margin: 0;
+      display: block;
+    }
+    .navbar-links {
+      display: flex;
+      gap: var(--nav-gap);
+      align-items: center;
+    }
+    .navbar-link {
+      color: var(--white);
+      font-size: 1.03rem;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 8px 17px;
+      border-radius: 22px;
+      background: rgba(47,174,88,0.07);
+      transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+      box-shadow: 0 1px 6px rgba(47,174,88,0.07);
+      position: relative;
+      border: none;
+      white-space: nowrap;
+    }
+    .navbar-link:hover,
+    .navbar-link.active {
+      background: rgba(255,255,255,0.18);
+      color: #206e3a;
+      box-shadow: 0 4px 16px rgba(47,174,88,0.17);
+      text-decoration: underline;
+    }
+    .navbar-link.special {
+      background: linear-gradient(90deg,#baf9bc 0%, #2fae58 100%);
+      color: var(--primary-dark);
+    }
+    .navbar-link.special:hover {
+      color: var(--primary);
+      background: linear-gradient(90deg,#eafbee 0%, #baf9bc 100%);
+    }
+    /* 加入我们二维码弹窗 */
+    .qr-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(47,174,88,0.12);
+      z-index: 101;
+      justify-content: center;
+      align-items: center;
+    }
+    .qr-modal-content {
+      background: #fff;
+      border-radius: 26px;
+      box-shadow: 0 8px 32px rgba(47,174,88,0.16);
+      padding: 30px 18px 22px 18px;
+      max-width: 92vw;
+      width: 350px;
+      text-align: center;
+      position: relative;
+      animation: fadeIn .3s;
+      border: 2px solid var(--accent);
+    }
+    @keyframes fadeIn {
+      from { opacity:0; transform: scale(0.97);}
+      to{ opacity:1; transform: scale(1);}
+    }
+    .qr-modal img {
+      width: 190px;
+      height: 190px;
+      margin: 0 auto 20px auto;
+      border-radius: 18px;
+      box-shadow: 0 1px 8px rgba(47,174,88,0.09);
+      background: var(--gray);
+      border: 1.5px solid var(--accent);
+    }
+    .qr-modal .close-btn {
+      position: absolute;
+      top: 14px; right: 16px;
+      background: #eee;
+      color: var(--primary-dark);
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 50%;
+      padding: 3px 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(47,174,88,0.06);
+      transition: background .15s;
+    }
+    .qr-modal .close-btn:hover {
+      background: #eafbee;
+      color: var(--primary);
+    }
+    .qr-modal .qr-note {
+      font-size: 0.98rem;
+      color: #246c3f;
+      margin-top: 12px;
+      margin-bottom: 3px;
+      background: #eafbee;
+      border-radius: 10px;
+      padding: 6px 8px;
+      box-shadow: 0 2px 8px rgba(47,174,88,.07);
+      border: 1px solid var(--accent);
+    }
+    .qr-modal .qr-tip {
+      font-size: 0.93rem;
+      color: #6b7d6f;
+      margin-top: 6px;
+      margin-bottom: 2px;
+      line-height: 1.43;
+      font-style: italic;
+      background: #f4f6f9;
+      border-radius: 8px;
+      padding: 6px 8px;
+      border: 1px solid #eafbee;
+    }
 
+    @media (max-width: 980px) {
+      .navbar-logo img {
+        max-width: 120px;
+        height: 34px;
+      }
+    }
+    @media (max-width: 820px) {
+      .navbar-links {
+        gap: 13px;
+      }
+      .navbar-link {
+        padding: 8px 8px;
+        font-size: 0.98rem;
+      }
+      .navbar-logo img {
+        height: 28px;
+        max-width: 80px;
+      }
+    }
+    @media (max-width: 600px) {
+      .navbar {
+        height: 46px;
+        padding: 0 2vw;
+      }
+      .navbar-logo img {
+        height: 20px;
+        max-width: 48vw;
+      }
+      .navbar-link {
+        font-size: 0.82rem;
+        padding: 6px 3px;
+      }
+      .navbar-links {
+        gap: 5px;
+      }
+      .qr-modal-content {
+        width: 94vw;
+        max-width: 98vw;
+        padding: 18px 2vw 14px 2vw;
+      }
+      .qr-modal img {
+        width: 62vw;
+        height: 62vw;
+        max-width: 220px;
+        max-height: 220px;
+      }
+    }
+    @media (max-width: 480px) {
+      .navbar-logo img {
+        max-width: 44vw;
+      }
+      .navbar-link {
+        font-size: 0.72rem;
+        padding: 4px 1px;
+      }
+    }
     header {
       width: 100vw;
       position: relative;
@@ -40,6 +244,7 @@
       z-index: 2;
       background: var(--primary-light);
       box-shadow: 0 4px 24px rgba(47, 174, 88, 0.10);
+      margin-top: var(--nav-height);
     }
     .banner-img {
       display: block;
@@ -49,6 +254,7 @@
       border-bottom-left-radius: var(--radius);
       border-bottom-right-radius: var(--radius);
       box-shadow: 0 6px 20px rgba(47,174,88,.08);
+      margin-bottom: 0;
     }
     .banner-title {
       position: absolute;
@@ -66,6 +272,7 @@
       text-shadow: 0 2px 12px rgba(47,174,88,.08);
       z-index: 2;
       white-space: nowrap;
+      border: 2px solid var(--accent);
     }
     @media (max-width: 600px) {
       .banner-title {
@@ -74,10 +281,12 @@
         top: 12px;
       }
       .banner-img {
-        max-height: 160px;
+        max-height: 140px;
+      }
+      header {
+        margin-top: 46px;
       }
     }
-
     .container {
       width: 100%;
       max-width: 520px;
@@ -91,6 +300,8 @@
       position: relative;
       z-index: 3;
       min-height: 300px;
+      border: 1.5px solid var(--accent);
+      background: linear-gradient(120deg, #eafbee 0%, #fff 100%);
     }
     @media (max-width: 600px) {
       .container {
@@ -163,6 +374,7 @@
       width: 92%;
       margin-left: auto;
       margin-right: auto;
+      border: 1px solid var(--accent);
     }
 
     footer {
@@ -189,7 +401,46 @@
     .contact-link:hover {
       color: #43b34d;
     }
+    /* 响应式菜单隐藏/显示（小屏下） */
+    .navbar-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.9rem;
+      margin-left: 8px;
+      cursor: pointer;
+      z-index: 110;
+      padding: 0 8px;
+      transition: color .18s;
+    }
+    .navbar-menu-toggle:active {
+      color: #baf9bc;
+    }
+    @media (max-width: 600px) {
+      .navbar-links {
+        position: absolute;
+        top: 46px; right: 0;
+        background: linear-gradient(90deg, #2fae58 0%, #86e993 100%);
+        flex-direction: column;
+        align-items: flex-end;
+        width: 86vw;
+        border-bottom-left-radius: 18px;
+        box-shadow: 0 6px 18px rgba(47,174,88,.13);
+        display: none;
+        padding: 10px 0 16px 0;
+        gap: 3px;
+      }
+      .navbar-links.open {
+        display: flex;
+        animation: fadeIn .2s;
+      }
+      .navbar-menu-toggle {
+        display: block;
+      }
+    }
   </style>
+  <!-- Clarity analytics script -->
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -199,6 +450,31 @@
 </script>
 </head>
 <body>
+  <!-- 新导航栏，logo已带文字 -->
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <img src="logo.png" alt="山东农业大学 Logo">
+    </div>
+    <button class="navbar-menu-toggle" id="menuToggle" aria-label="功能菜单">&#9776;</button>
+    <div class="navbar-links" id="navbarLinks">
+      <a href="https://docs.qq.com/form/page/DUVJGVGxBVE94QUJ4" target="_blank" class="navbar-link special">申请@永雏塔菲大学.top邮箱</a>
+      <a href="https://benkezhaosheng.sdau.edu.cn" target="_blank" class="navbar-link">本科招生网</a>
+      <a href="mailto:correspondence@methodbox.top" class="navbar-link">联系本站</a>
+      <a href="javascript:void(0)" class="navbar-link" id="joinUsBtn">加入我们</a>
+    </div>
+  </nav>
+  <!-- 加入我们二维码弹窗 -->
+  <div class="qr-modal" id="qrModal">
+    <div class="qr-modal-content">
+      <button class="close-btn" id="qrCloseBtn" title="关闭">&times;</button>
+      <img src="qr.png" alt="群二维码">
+      <div class="qr-note">扫码加入我们的交流群！</div>
+      <div class="qr-tip">
+        注意：本群可能包含的元素包括但不限于：<br>
+        鉴证、叽里咕噜说什么呢、这就是中国、群友各说各的、...
+      </div>
+    </div>
+  </div>
   <header>
     <img src="./banner.jpg" alt="山东农业大学俯瞰图" class="banner-img">
     <div class="banner-title">欢迎来到山东农业大学！</div>
@@ -233,6 +509,40 @@
     <a class="contact-link" href="mailto:arab@methodbox.top">arab@methodbox.top</a>
   </footer>
   <script>
+    // 顶部菜单移动端适配
+    const menuToggle = document.getElementById('menuToggle');
+    const navbarLinks = document.getElementById('navbarLinks');
+    menuToggle.addEventListener('click', function() {
+      navbarLinks.classList.toggle('open');
+    });
+    // 点击空白区域关闭移动菜单
+    document.body.addEventListener('click', function(e){
+      if(window.innerWidth <= 600 && navbarLinks.classList.contains('open')) {
+        if(!navbarLinks.contains(e.target) && e.target !== menuToggle) {
+          navbarLinks.classList.remove('open');
+        }
+      }
+    });
+
+    // 加入我们二维码弹窗功能
+    const joinUsBtn = document.getElementById('joinUsBtn');
+    const qrModal = document.getElementById('qrModal');
+    const qrCloseBtn = document.getElementById('qrCloseBtn');
+    joinUsBtn.addEventListener('click', function(e){
+      qrModal.style.display = 'flex';
+      setTimeout(() => qrModal.querySelector('.qr-modal-content').focus(), 10);
+    });
+    qrCloseBtn.addEventListener('click', function(){
+      qrModal.style.display = 'none';
+    });
+    qrModal.addEventListener('click', function(e){
+      if(e.target === qrModal) qrModal.style.display = 'none';
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') qrModal.style.display = 'none';
+    });
+
+    // 按钮点击反馈
     document.querySelectorAll('.nav-link').forEach(el => {
       el.addEventListener('mousedown', function() {
         el.style.background = 'linear-gradient(90deg, #c3f5d3 0%, #e8fff0 100%)';
@@ -241,6 +551,20 @@
         setTimeout(() => {
           el.style.background = '';
         }, 180);
+      });
+      el.addEventListener('mouseleave', function() {
+        el.style.background = '';
+      });
+    });
+    // 顶部导航栏按钮点击反馈
+    document.querySelectorAll('.navbar-link').forEach(el => {
+      el.addEventListener('mousedown', function() {
+        el.style.background = 'linear-gradient(90deg, #eafbee 0%, #baf9bc 100%)';
+      });
+      el.addEventListener('mouseup', function() {
+        setTimeout(() => {
+          el.style.background = '';
+        }, 120);
       });
       el.addEventListener('mouseleave', function() {
         el.style.background = '';
